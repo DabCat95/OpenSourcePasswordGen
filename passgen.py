@@ -1,25 +1,25 @@
 #Base Code Block by DabCat95 5/9/2023
-import random
+import secrets
 import string
 
 def generate_password(length):
-    # Define password char's
-    lowercase = string.ascii_lowercase
-    uppercase = string.ascii_uppercase
-    digits = string.digits
-    symbols = string.punctuation
+    #Define alphanumerics
+    alphabet = string.ascii_letters + string.digits
 
-    #Combine character sets and build pool
-    all_chars = lowercase + uppercase + digits + symbols
+    #Genertate passwords until one meets requirements
+    while True:
+        #Use secrets to generate random password
+        password = ''.join(secrets.choice(alphabet) for i in range(length))
 
-    #Shuffle chars to make password random
-    shuffled_chars = random.sample(all_chars, len(all_chars))
+        #Check if password meets requirements
+        if (any(c.islower() for c in password)
+            and any(c.isupper() for c in password)
+            and sum(c.isdigit() for c in password) >= 3):
+            break
 
-    #Generate password after shuffle
-    password = ''.join(random.sample(shuffled_chars, length))
-
+    #return generated password
     return password
 
 #Main Code Loop
-password = generate_password(14) #Generate random password and diplay
+password = generate_password(14) #Generate a random 14 character password
 print(password)
